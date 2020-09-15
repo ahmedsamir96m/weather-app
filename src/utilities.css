@@ -1,0 +1,27 @@
+/****** Fonts Utilites ******/
+.h1Span, .h2Span, .h3Span, .h4Span, .h5Span, .h6Span {
+    display: block;
+}
+
+.h1Span {
+    font-size: 2em;  
+    font-weight: bold;
+}
+.h2Span {
+    font-size: 1.5em;
+    font-weight: bold;
+}
+.h3Span { 
+    font-size: 1.17em;
+    font-weight: bold;
+}
+.h4Span { 
+    font-weight: bold;
+}
+.h5Span { 
+    font-weight: bold;
+}
+.h6Span { 
+    font-size: .67em;
+    font-weight: bold;
+}

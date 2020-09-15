@@ -1,0 +1,15 @@
+.weatherCard {
+  margin: 0 auto;
+  padding: 0;
+  width: 200px;
+  text-align: center;
+  border-radius: 1.2em;
+  color: #fff;
+  background: linear-gradient(to top, tomato, orange);
+}
+
+.weatherCard--image {
+  color: #fff;
+  filter: invert(100%);
+  width: 5em;
+}
