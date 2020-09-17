@@ -3,6 +3,7 @@ import styled from "styled-components";
 import "./WeatherCard.css";
 import Location from "../Location/Location";
 import Icon from "../Icon/Icon";
+import Condition from "../Condition/Condition";
 
 const WeatherCard = (props) => {
   let HighBGColor, LowBGColor;
@@ -31,10 +32,12 @@ const WeatherCard = (props) => {
 
   return (
     <div className="weatherCard" style={weatherCardStyles}>
-      <Location />
+      <Location city={props.city} country={props.country} />
       <Icon weatherCondition={props.weatherCondition} />
-      <span className="weatherCard--temperature h1Span">32 °C</span>
-      <span className="weatherCard--condition h3Span">Clear</span>
+      <Condition
+        weatherTemperature={props.temperature}
+        weatherCondition={props.weatherCondition}
+      />
     </div>
   );
 };
