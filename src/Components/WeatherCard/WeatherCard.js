@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import "./WeatherCard.css";
 import Location from "../Location/Location";
+import Icon from "../Icon/Icon";
 
 const WeatherCard = (props) => {
   let HighBGColor, LowBGColor;
@@ -31,11 +32,7 @@ const WeatherCard = (props) => {
   return (
     <div className="weatherCard" style={weatherCardStyles}>
       <Location />
-      <img
-        src="./images/cloud-cloudy.png"
-        className="weatherCard--image"
-        alt="An icon that represent current weather condition"
-      />
+      <Icon weatherCondition={props.weatherCondition} />
       <span className="weatherCard--temperature h1Span">32 °C</span>
       <span className="weatherCard--condition h3Span">Clear</span>
     </div>
