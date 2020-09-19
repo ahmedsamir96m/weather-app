@@ -33,7 +33,7 @@ const WeatherCard = (props) => {
   return (
     <div className="weatherCard" style={weatherCardStyles}>
       <Location city={props.city} country={props.country} />
-      <Icon weatherCondition={props.weatherCondition} />
+      <Icon iconImage={props.iconImage} />
       <Condition
         weatherTemperature={props.temperature}
         weatherCondition={props.weatherCondition}
