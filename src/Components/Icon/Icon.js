@@ -8,7 +8,7 @@ function Icon(props) {
       <img
         className="weatherCard--image"
         alt="An icon that represent current weather condition"
-        src={props.iconImage}
+        src={`http://openweathermap.org/img/w/${props.iconImage}.png`}
       />
     </div>
   );
