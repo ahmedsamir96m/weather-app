@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./App.css";
 import WeatherCard from "./Components/WeatherCard/WeatherCard";
 
 function App() {
-  const [searchQuery, setSearchQuery] = useState("");
+  const [searchQuery, setSearchQuery] = useState("tokyo");
   const [temperature, setTemperature] = useState("");
   const [weatherCondition, setWeatherCondition] = useState("");
   const [city, setCity] = useState("");
@@ -26,9 +26,18 @@ function App() {
       setWeatherCondition(resp.weather[0].main);
       setIconImage(resp.weather[0].icon);
       setTemperature(resp.main.temp);
-      console.log(resp.weather[0].icon);
     });
   };
+
+  useEffect(() => {
+    weatherData(searchQuery).then((resp) => {
+      setCity(resp.name);
+      setCountry(resp.sys.country);
+      setWeatherCondition(resp.weather[0].main);
+      setIconImage(resp.weather[0].icon);
+      setTemperature(resp.main.temp);
+    });
+  }, []);
 
   return (
     <div className="App">
