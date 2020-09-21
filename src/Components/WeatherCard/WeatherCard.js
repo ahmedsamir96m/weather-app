@@ -13,7 +13,7 @@ const WeatherCard = (props) => {
 
   if (props.temperature >= 18) {
     HighBGColor = (1 - (props.temperature - 18) / 42) * 255;
-    LowBGColor = HighBGColor - 150;
+    LowBGColor = HighBGColor - 200;
     Weather = 255;
     coldWeather = 0;
   } else if (props.temperature < 18) {
@@ -26,7 +26,7 @@ const WeatherCard = (props) => {
     background: `linear-gradient(
       to top,
       rgb(${Weather}, ${HighBGColor}, ${coldWeather}),
-      rgb(${Weather}, ${LowBGColor}, ${coldWeather})
+      rgb(${Weather}, ${Math.abs(LowBGColor) - 150}, ${coldWeather})
     )`,
   };
 
