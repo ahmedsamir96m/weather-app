@@ -10,10 +10,12 @@ function WeatherController(props) {
   const [country, setCountry] = useState("");
   const [iconImage, setIconImage] = useState("");
   const [dataError, setDataError] = useState(false);
+  const [dataLoading, setDataLoading] = useState(true);
 
   /* Calling openWeather API Asynchronous */
   const weatherData = async (query) => {
     try {
+      setDataLoading(true);
       const apiResponse = await fetch(
         `http://api.openweathermap.org/data/2.5/weather?q=${query}&units=metric&appid=f3dd4d99772d41e15b26f5fc6a2b683c`
       );
@@ -25,9 +27,11 @@ function WeatherController(props) {
         setTemperature(resp.main.temp);
       });
       setDataError(false);
+      setDataLoading(false);
       return jsonData;
     } catch (error) {
       setDataError(true);
+      setDataLoading(false);
     }
   };
 
@@ -48,7 +52,7 @@ function WeatherController(props) {
 
   return (
     <div>
-      {!dataError ? (
+      {!dataError && !dataLoading ? (
         <div className="App">
           <form action="">
             <input
@@ -78,6 +82,8 @@ function WeatherController(props) {
             iconImage={iconImage}
           />
         </div>
+      ) : dataLoading ? (
+        <div>Loading</div>
       ) : (
         <div>
           Errors
