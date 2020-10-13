@@ -1,6 +1,41 @@
 import React, { useEffect, useState } from "react";
 import WeatherCard from "../WeatherCard/WeatherCard";
 function WeatherController(props) {
+  // Styles
+  const formStyles = {
+    textAlign: "center",
+    margin: "5em 0",
+  };
+
+  const btnStyles = {
+    background: "none",
+    border: "2px solid black",
+    padding: "10px 25px",
+    fontSize: "16px",
+  };
+
+  const searchBarStyles = {
+    width: "200px",
+    height: "30px",
+    padding: " 5px 10px",
+    marginRight: "10px",
+    border: "2px solid black",
+  };
+
+  const errorContainerStyles = {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    flexDirection: "column",
+    height: "100vh",
+    gap: "25px",
+  };
+
+  const errorMsgStyles = {
+    fontSize: "36px",
+    color: "red",
+  };
+
   /* Setting Different Weather State */
   const { location } = props;
   const [searchQuery, setSearchQuery] = useState("tokyo"); //settinng tokyo to be the default city when component mount
@@ -10,10 +45,12 @@ function WeatherController(props) {
   const [country, setCountry] = useState("");
   const [iconImage, setIconImage] = useState("");
   const [dataError, setDataError] = useState(false);
+  const [dataLoading, setDataLoading] = useState(true);
 
   /* Calling openWeather API Asynchronous */
   const weatherData = async (query) => {
     try {
+      setDataLoading(true);
       const apiResponse = await fetch(
         `http://api.openweathermap.org/data/2.5/weather?q=${query}&units=metric&appid=f3dd4d99772d41e15b26f5fc6a2b683c`
       );
@@ -22,12 +59,14 @@ function WeatherController(props) {
         setCountry(resp.sys.country);
         setWeatherCondition(resp.weather[0].main);
         setIconImage(resp.weather[0].icon);
-        setTemperature(resp.main.temp);
+        setTemperature(Math.floor(resp.main.temp));
       });
       setDataError(false);
+      setDataLoading(false);
       return jsonData;
     } catch (error) {
       setDataError(true);
+      setDataLoading(false);
     }
   };
 
@@ -48,10 +87,18 @@ function WeatherController(props) {
 
   return (
     <div>
-      {!dataError ? (
+      {!dataError && !dataLoading ? (
         <div className="App">
-          <form action="">
+          <form
+            style={formStyles}
+            onSubmit={(e) => {
+              e.preventDefault();
+              handleCitySearch(e);
+            }}
+          >
             <input
+              style={searchBarStyles}
+              required
               type="text"
               name="city"
               id="weatherCity"
@@ -60,13 +107,7 @@ function WeatherController(props) {
                 setSearchQuery(e.target.value);
               }}
             />
-            <button
-              type="submit"
-              onClick={(e) => {
-                e.preventDefault();
-                handleCitySearch(e);
-              }}
-            >
+            <button type="submit" style={btnStyles}>
               Search
             </button>
           </form>
@@ -78,10 +119,15 @@ function WeatherController(props) {
             iconImage={iconImage}
           />
         </div>
+      ) : dataLoading ? (
+        <div>Loading</div>
       ) : (
-        <div>
-          Errors
+        <div className="dataError" style={errorContainerStyles}>
+          <p style={errorMsgStyles}>
+            Error 404, You've searched for unknown place!
+          </p>
           <button
+            style={btnStyles}
             onClick={(e) => {
               e.preventDefault();
               window.location.reload();
